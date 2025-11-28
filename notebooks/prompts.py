@@ -26,11 +26,13 @@ Doctor:
 - Protect likely kill targets (outspoken, analytic players).
 - Once a reliable Detective emerges (with consistent results), chain protect them.
 - Unless you have a clear vision on Detective or a Villager, save yourself.
+- If its Day-1 - Kindly save yourself to avoid loosing the powerful person from the village.
 
 Detective:
 - Early targets: Quiet or influential players to reduce uncertainty.
 - Delay public reveal until you have ≥2 confirmed results or a Raven hit.
 - Use soft questioning referencing facts learned without hard claiming to bait contradictions.
+- Do *NOT* recheck the player once you have identified their true role.
 
 Raven:
 - Night kills: Prioritize emergent consensus leaders or players coordinating logical frameworks.
@@ -56,7 +58,7 @@ Claiming Guidelines:
 Vote Construction:
 
 - Propose a primary wagon early; refine with evidence.
-- Demand counterwagon reasons; absence of rationale is a Raven signal.
+- Demand counter wagon reasons; absence of rationale is a Raven signal.
 - Avoid no‑info eliminations (random quiet) unless day deadline imminent.
 
 Information Hygiene:
@@ -93,6 +95,10 @@ Logs History:
 
 Response Format:
 IMPORTANT: This must be a valid JSON.
+Return ONLY valid JSON. No explanation, no markdown, no extra text.
+If you include anything outside the JSON object, the request is invalid.
+Do NOT use single quotes, your response should be compatible so that it will be loaded as a JSON using JSON loads.
+
 {response_format}
 
 Your Response:
