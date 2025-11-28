@@ -16,6 +16,7 @@ from openai import AsyncOpenAI
 from pydantic import BaseModel
 from uuid import uuid4
 from dotenv import load_dotenv
+import time
 
 from prompts import GAME_PROMPT
 load_dotenv()
@@ -35,20 +36,41 @@ async def make_llm_call(prompt):
 
     try:
         print("Making an LLM call")
-        resp = await client.responses.parse(
-            model=MODEL_NAME,
-            input=[ { "role": "user", "content": prompt,}],
-            reasoning={"effort": REASONING_EFFORT},
-            text={"verbosity": VERBOSITY}
+        print(f"{prompt=}")
+        
+        
+        # resp = await asyncio.wait_for(
+        #     client.responses.parse(
+        #         model=MODEL_NAME,
+        #         input=[{"role": "user", "content": prompt}],
+        #         reasoning={"effort": REASONING_EFFORT},
+        #         text={"verbosity": VERBOSITY},
+        #     ),
+        # )
+        
+        start = time.perf_counter()
+
+        resp = await asyncio.wait_for(
+            client.responses.parse(   # <-- MUST have parentheses
+                model=MODEL_NAME,
+                input=[{"role": "user", "content": prompt}],
+                reasoning={"effort": REASONING_EFFORT},
+                text={"verbosity": VERBOSITY},
+            ),
+            timeout=35,
         )
+
+        print("Elapsed:", time.perf_counter() - start)
         print("LLM call completed")
-        #print(resp.output_text)
         return resp.output_text
+
+    except asyncio.TimeoutError:
+        print("Timeout reached: returning dummy response")
+        return "DUMMY_RESPONSE"
 
     except Exception as e:
         print(f"Error during OpenAI API call: {e}")
         raise
-
 
 # async def main():
 #     response = await make_llm_call(GAME_PROMPT)
